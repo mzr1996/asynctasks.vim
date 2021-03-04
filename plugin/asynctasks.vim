@@ -1172,6 +1172,15 @@ function! asynctasks#start(bang, taskname, path, ...)
 	let task = tasks.config[a:taskname]
 	let ininame = task.__name__
 	let source = 'task ['. a:taskname . '] from ' . ininame
+	let link = get(task, 'link', '')
+	if link != ''
+	  if (a:0 < 3) || (a:0 >= 3 && a:1 <= 0)
+	    call asynctasks#start(a:bang, link, path)
+	  else
+	    call asynctasks#start(a:bang, link, path, a:1, a:2, a:3)
+	  endif
+	  return 0
+	endif
 	let command = s:command_select(task, &ft)
 	if command == ''
 		call s:errmsg('no command defined in ' . source)
