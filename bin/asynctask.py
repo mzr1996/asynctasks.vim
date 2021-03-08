@@ -1205,8 +1205,7 @@ def main(args = None):
     prog = os.path.basename(prog and prog or 'asynctask.py')
     prog = 'asynctask'
     if len(args) <= 1:
-        pretty.error('require task name, use %s -h for help'%prog)
-        return 1
+        args.append('-f')
     opts, args = getopt(args[1:])
     if 'h' in opts:
         usage_help(prog)
